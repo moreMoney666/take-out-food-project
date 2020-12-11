@@ -28,15 +28,35 @@ module.exports = {
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: false,
   productionSourceMap: false,
+  // devServer: {
+  //   port: port,
+  //   open: true,
+  //   overlay: {
+  //     warnings: false,
+  //     errors: true
+  //   },
+  //   before: require('./mock/mock-server.js')
+  // },
   devServer: {
     port: port,
-    open: true,
+    // open: true,
     overlay: {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    before: require('./mock/mock-server.js'),
+    proxy: {
+      '/prod-api': { // 匹配所有以 '/dev-api'开头的请求路径
+        target: 'https://elm.cangdu.org', // 代理目标的基础路径
+        // target: 'http://47.93.148.192',
+        changeOrigin: true, // 支持跨域
+        pathRewrite: { // 重写路径: 去掉路径中开头的'/dev-api'
+        '/prod-api': ''
+        }
+      },
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
