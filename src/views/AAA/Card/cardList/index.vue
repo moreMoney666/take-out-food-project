@@ -107,7 +107,7 @@
           <el-table-column fixed="right" label="操作" width="180">
             <template slot-scope="{ row, $index }">
               <el-button
-                @click.native.prevent="selectedRow($index, row)"
+                @click.native.prevent="selectedRow(row)"
                 type="success"
                 size="mini"
                 icon="el-icon-circle-check"
@@ -126,7 +126,7 @@
                 </el-button>
               </el-popconfirm>
               <el-button
-                @click.native.prevent="editRow($index, row)"
+                @click.native.prevent="editRow(row)"
                 type="warning"
                 size="mini"
                 icon="el-icon-edit"
@@ -263,20 +263,23 @@ export default {
     };
   },
   mounted() {
+    // if()
     this.$bus.$on("getGoods", this.getGoods);
     this.$bus.$on("getAddressList", this.getAddress);
   },
   methods: {
     // 删除地址
     deleteRow(row, $index) {
+
       this.addressList.splice($index, 1);
       // console.log(row)
       if (row.isSelected === 1) {
         this.selected = "";
       }
     },
+    
     // 选择地址
-    selectedRow($index, row) {
+    selectedRow(row) {
       this.addressList.forEach((item, index) => {
         this.$set(row, "isSelected", 0);
       });
@@ -284,13 +287,15 @@ export default {
       this.selected = row;
       // console.log(row)
     },
+
     // 修改地址
-    editRow($index, row) {
+    editRow(row) {
       console.log(row);
       // 向地址页传输数据
       // this.$bus.$emit('changeAddress',row)
       this.$router.push("/card/address");
     },
+
     handleClose(done) {
       this.$confirm("确认关闭？")
         .then(_ => {
@@ -299,6 +304,7 @@ export default {
         })
         .catch(_ => {});
     },
+
     // 下单按钮
     buy(ok) {
       if (ok == "no") {
@@ -311,12 +317,16 @@ export default {
     },
     // 获取地址信息
     getAddress(data) {
+      // localStorage.setItem('ADDRESSLIST_KEY',JSON.stringify(data))
       this.addressList = data;
     },
+
     // 获取商品信息
     getGoods(data) {
+      // localStorage.setItem('CARTLIST_KEY',JSON.stringify(data))
       this.cartList = data;
     },
+    
     // 新增地址
     toAddAddress() {
       // 清空

@@ -1,13 +1,13 @@
 <template>
 <div>
-  --------AddFood
+  ---------addFood
 </div>
 </template>
 
 <script>
 export default {
-    name: 'AddFood',
-    
+  name: 'AddFood',
+  
 }
 </script>
 
