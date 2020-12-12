@@ -318,15 +318,15 @@ export default {
     // 获取地址信息
     getAddress(data) {
       // localStorage.setItem('ADDRESSLIST_KEY',JSON.stringify(data))
-      this.addressList = data;
+      this.addressList.push(data)
     },
 
     // 获取商品信息
     getGoods(data) {
       // localStorage.setItem('CARTLIST_KEY',JSON.stringify(data))
-      this.cartList = data;
+      this.cartList.push(data)
     },
-    
+
     // 新增地址
     toAddAddress() {
       // 清空
