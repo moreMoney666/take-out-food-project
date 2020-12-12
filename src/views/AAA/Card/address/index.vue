@@ -117,7 +117,7 @@ export default {
   methods: {
     // 点击立即创建按钮,jiang
     submitForm() {
-      let addressList;
+      let addressList = [];
       if (localStorage.getItem("addressList")) {
         addressList = JSON.parse(localStorage.getItem("addressList"));
       }
