@@ -20,6 +20,10 @@
     "js-cookie": "2.2.0",
     "less": "^3.12.2",
     "less-loader": "^7.1.0",
+<<<<<<< HEAD
+=======
+    "loader": "^2.1.1",
+>>>>>>> 36b691cee792902028877298c964cbe1977ccb76
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",

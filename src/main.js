@@ -15,6 +15,7 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import '@/plugins/element-ui'
 
 /**
  * If you don't want to use mock-server
@@ -40,7 +41,7 @@ Vue.config.productionTip = false
 // 安装全局事件总线
 new Vue({
   beforeCreate() {
-    Vue.prototype.$bus = this;
+    Vue.prototype.$bus = this
   },
   el: '#app',
   router,
