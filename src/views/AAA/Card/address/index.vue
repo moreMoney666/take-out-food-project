@@ -87,7 +87,7 @@ export default {
         ],
         name: [
           { required: true, message: "请输入收货姓名", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
+          { min: 2, max: 5, message: "长度在 2 到 5 个字符", trigger: "blur" },
           {
             validator: function(rule, value, callback) {
               if (/^[\u4e00-\u9fa5]+$/.test(value) == false) {
@@ -121,15 +121,19 @@ export default {
     };
   },
   methods: {
-    // 点击立即创建按钮,jiang
+    // 点击立即创建按钮
     submitForm(formName) {
+      // 通过全局事件总线传递事件
     this.$bus.$emit("getAddressList",this.ruleForm);
+    
+    this.result = this.data.ruleForm;
+    if (ruleForm.length === 0){
+      this.$router.push('/address')
+    }else{
+      // 跳转到
     this.$router.push('/card/cartList')
-      // try{
-      //     if(result){
-
-      //     }
-      console.log(this.ruleForm);
+    }
+    
     },
     resetForm() {
       // this.$refs[formName].resetFields();
