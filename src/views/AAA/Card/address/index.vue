@@ -8,8 +8,8 @@
       label-width="100px"
       class="demo-ruleForm"
     >
-      <el-form-item label="收货地址" prop="address">
-        <el-input v-model="ruleForm.address"></el-input>
+      <el-form-item label="收货地址" prop="title">
+        <el-input v-model="ruleForm.title"></el-input>
       </el-form-item>
       <el-form-item label="收货姓名" prop="name">
         <el-input v-model="ruleForm.name"></el-input>
@@ -19,14 +19,14 @@
       </el-form-item>
       <el-form-item label="所在城市" prop="city">
         <el-select v-model="ruleForm.city" placeholder="请选择收货地址">
-          <el-option label="上海" value="shanghai"></el-option>
-          <el-option label="北京" value="beijing"></el-option>
-          <el-option label="广州" value="guangzhou"></el-option>
-          <el-option label="深圳" value="shenzhen"></el-option>
+          <el-option label="上海" value="上海"></el-option>
+          <el-option label="北京" value="北京"></el-option>
+          <el-option label="广州" value="广州"></el-option>
+          <el-option label="深圳" value="深圳"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="详细地址" prop="detailed">
-        <el-input v-model="ruleForm.detailed"></el-input>
+      <el-form-item label="详细地址" prop="detail">
+        <el-input v-model="ruleForm.detail"></el-input>
       </el-form-item>
       <el-form-item label="地址类型">
         <el-checkbox-group v-model="ruleForm.type">
@@ -46,45 +46,39 @@
         <el-input type="textarea" v-model="ruleForm.desc"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')"
-          >立即创建</el-button
-        >
-        <el-button @click="resetForm()">重置</el-button>
+        <div v-if="$route.query.isEdit">
+          <el-button type="primary">保存</el-button>
+          <el-button>取消</el-button>
+        </div>
+        <div v-else>
+          <el-button type="primary" @click="submitForm">立即创建</el-button>
+          <el-button @click="resetForm()">重置</el-button>
+        </div>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
+import { v4 as uuidv4 } from "uuid";
 export default {
   name: "Address",
   data() {
-    // var address = (curVal,oldVal) => {
-    //      if (!curVal) {
-    //           this.pureNumber = ''
-    //           return false
-    //      }
-    //      // 实时把非数字的输入过滤掉
-    //       this.pureNumber = curVal.match(/\d/ig) ? curVal.match(/\d/ig).join('') : ''
-    //     }
-    // },
     return {
       //  修改拿回来的数据要存储得地方
       addressList: [],
       ruleForm: {
-        address: "", //收货地址
+        title: "", //收货地址
         name: "", //收货姓名
         phone: "", //收货电话
         city: "", //所在城市
-        detailed: "", //详细地址
+        detail: "", //详细地址
         type: [], //地址类型
         gender: "", //性别
         desc: "" //备注
       },
       // 表单验证
       rules: {
-        address: [
-          { required: true, message: "请输入收货地址", trigger: "blur" }
-        ],
+        title: [{ required: true, message: "请输入收货地址", trigger: "blur" }],
         name: [
           { required: true, message: "请输入收货姓名", trigger: "blur" },
           { min: 2, max: 5, message: "长度在 2 到 5 个字符", trigger: "blur" },
@@ -105,7 +99,7 @@ export default {
           { pattern: /^1[34578]\d{9}$/, message: "手机号格式不正确" }
         ],
         city: [{ required: true, message: "请选择城市", trigger: "blur" }],
-        detailed: [
+        detail: [
           { required: true, message: "请输入详细地址", trigger: "blur" }
         ],
         type: [
@@ -121,44 +115,35 @@ export default {
     };
   },
   methods: {
-    // 点击立即创建按钮
-    submitForm(formName) {
-      // 通过全局事件总线传递事件
-    this.$bus.$emit("getAddressList",this.ruleForm);
-    
-    this.result = this.data.ruleForm;
-    if (ruleForm.length === 0){
-      this.$router.push('/address')
-    }else{
-      // 跳转到
-    this.$router.push('/card/cartList')
-    }
-    
+    // 点击立即创建按钮,jiang
+    submitForm() {
+      let addressList;
+      if (localStorage.getItem("addressList")) {
+        addressList = JSON.parse(localStorage.getItem("addressList"));
+      }
+      this.ruleForm.id = uuidv4();
+      // console.log(this.addressList);
+      addressList.push(this.ruleForm);
+      this.addressList = addressList;
+      // console.log(this.addressList);
+      localStorage.setItem("addressList", JSON.stringify(this.addressList));
+      this.$message.success("添加成功");
+      this.$router.push("/card/cartList");
     },
     resetForm() {
       // this.$refs[formName].resetFields();
       this.ruleForm = {
-        address: "", //收货地址
+        title: "", //收货地址
         name: "", //收货姓名
         phone: "", //收货电话
         city: "", //所在城市
-        detailed: "", //详细地址
+        detail: "", //详细地址
         type: [], //地址类型
         gender: "", //性别
         desc: "" //备注
       };
     }
   }
-
-  //     this.$refs[formName].validate((valid) => {
-  //       if (valid) {
-  //         alert('submit!');
-  //       } else {
-  //         console.log('error submit!!');
-  //         return false;
-  //       }
-  //     });
-  //   },
   // 重置按钮
 };
 </script>

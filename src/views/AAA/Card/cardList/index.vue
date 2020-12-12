@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-card style="height:100%;display:block;">
+      <!-- 选择食品 -->
       <div class="addOk">
         <h3>已选食品</h3>
         <el-button
@@ -50,10 +51,10 @@
           <el-table-column prop="tips" label="销量" width="150">
           </el-table-column>
           <el-table-column prop="address" label="操作" width="80">
-            <template slot-scope="{ row,$index }">
+            <template slot-scope="{ row, $index }">
               <el-popconfirm
                 :title="`确定要删除 ${row.name} 这件商品吗`"
-                @onConfirm="cartList.splice($index,1)"
+                @onConfirm="cartList.splice($index, 1)"
               >
                 <el-button
                   slot="reference"
@@ -66,6 +67,8 @@
           </el-table-column>
         </el-table>
       </el-card>
+
+      <!-- 选择地址 -->
       <div class="addOk">
         <h3>
           已选择地址:
@@ -126,7 +129,7 @@
                 </el-button>
               </el-popconfirm>
               <el-button
-                @click.native.prevent="editRow(row)"
+                @click.native.prevent="toAddAddress(row,$index)"
                 type="warning"
                 size="mini"
                 icon="el-icon-edit"
@@ -147,153 +150,50 @@ export default {
   name: "CardList",
   data() {
     return {
-      selected: "",
+      selected: "", 
       visible: false,
       isShow: false,
-      addressList: [
-        {
-          city: "北京",
-          desc: "少放辣，需要餐具",
-          detail: "北七家镇宏福科技园",
-          id: "p6RT--t-tEkIIInkpn5b5",
-          name: "李先生",
-          phone: "13100000000",
-          sex: "男",
-          title: "北京市昌平区北七家镇宏福科技园",
-          type: ["家庭", "学校"]
-        },
-        // {
-        //   city: "上海",
-        //   desc: "1232131321",
-        //   detail: "2313212",
-        //   id: "p6RT--t-tEkIIInkpn5b5",
-        //   name: "21",
-        //   phone: "12312312311",
-        //   sex: "男",
-        //   title: "121",
-        //   type: ["家庭", "公司"]
-        // }
-      ],
-      cartList: [
-        {
-          __v: 0,
-          _id: "5e018611de911551beafac3c",
-          activity: {},
-          attributes: [],
-          attrs: [],
-          categoryName: "热销榜",
-          category_id: 9196,
-          description: "的撒旦",
-          display_times: [],
-          image_path: "16f35f39b6262048.jpg",
-          is_essential: false,
-          is_featured: 0,
-          item_id: 6053,
-          month_sales: 265,
-          name: "阿斯顿·",
-          pinyin_name: "",
-          rating: 5,
-          rating_count: 711,
-          restaurantName: "疾呼",
-          restaurant_id: 1,
-          satisfy_count: 128,
-          satisfy_rate: 30,
-          server_utc: "2019-12-22T12:14:57.129Z",
-          specfoods: [],
-          specifications: [],
-          tips: "711评价 月售265份"
-        }
-        // {
-        //   __v: 0,
-        //   _id: "5e018611de911551beafac3c",
-        //   activity: {},
-        //   attributes: [],
-        //   attrs: [],
-        //   categoryName: "热销榜",
-        //   category_id: 9196,
-        //   description: "的撒旦",
-        //   display_times: [],
-        //   image_path: "16f35f39b6262048.jpg",
-        //   is_essential: false,
-        //   is_featured: 0,
-        //   item_id: 6053,
-        //   month_sales: 265,
-        //   name: "阿斯顿·",
-        //   pinyin_name: "",
-        //   rating: 5,
-        //   rating_count: 711,
-        //   restaurantName: "疾呼",
-        //   restaurant_id: 1,
-        //   satisfy_count: 128,
-        //   satisfy_rate: 30,
-        //   server_utc: "2019-12-22T12:14:57.129Z",
-        //   specfoods: [],
-        //   specifications: [],
-        //   tips: "711评价 月售265份"
-        // },
-        // {
-        //   __v: 0,
-        //   _id: "5e018611de911551beafac3c",
-        //   activity: {},
-        //   attributes: [],
-        //   attrs: [],
-        //   categoryName: "热销榜",
-        //   category_id: 9196,
-        //   description: "的撒旦",
-        //   display_times: [],
-        //   image_path: "16f35f39b6262048.jpg",
-        //   is_essential: false,
-        //   is_featured: 0,
-        //   item_id: 6053,
-        //   month_sales: 265,
-        //   name: "阿斯顿·",
-        //   pinyin_name: "",
-        //   rating: 5,
-        //   rating_count: 711,
-        //   restaurantName: "疾呼",
-        //   restaurant_id: 1,
-        //   satisfy_count: 128,
-        //   satisfy_rate: 30,
-        //   server_utc: "2019-12-22T12:14:57.129Z",
-        //   specfoods: [],
-        //   specifications: [],
-        //   tips: "711评价 月售265份"
-        // },
-      ]
+      addressList: [],
+      cartList: [],
+      address: {}
     };
   },
   mounted() {
-    // if()
-    this.$bus.$on("getGoods", this.getGoods);
-    this.$bus.$on("getAddressList", this.getAddress);
+    // 提取地址信息
+    if (localStorage.getItem("addressList")) {
+      this.addressList = JSON.parse(localStorage.getItem("addressList"));
+      this.address = this.addressList[0];
+    }
+    // 提取食品信息
+    if (localStorage.getItem("cartList")) {
+      this.cartList = JSON.parse(localStorage.getItem("cartList"));
+    }
   },
   methods: {
     // 删除地址
     deleteRow(row, $index) {
-
-      this.addressList.splice($index, 1);
-      // console.log(row)
-      if (row.isSelected === 1) {
-        this.selected = "";
+      let addressList;
+      if (localStorage.getItem("addressList")) {
+        addressList = JSON.parse(localStorage.getItem("addressList"));
+        addressList.splice($index, 1);
+        localStorage.setItem("addressList", JSON.stringify(addressList));
+        if (row.isSelected === 1) {
+          this.selected = "";
+        }
       }
+      // 刷新缓存
+        location.reload()
     },
-    
+
     // 选择地址
     selectedRow(row) {
+      // 添加选中标识
       this.addressList.forEach((item, index) => {
         this.$set(row, "isSelected", 0);
       });
       row.isSelected = 1;
       this.selected = row;
       // console.log(row)
-    },
-
-    // 修改地址
-    editRow(row) {
-      console.log(row);
-      // 向地址页传输数据
-      // this.$bus.$emit('changeAddress',row)
-      this.$router.push("/card/address");
     },
 
     handleClose(done) {
@@ -305,7 +205,7 @@ export default {
         .catch(_ => {});
     },
 
-    // 下单按钮
+    // 确认下单按钮
     buy(ok) {
       if (ok == "no") {
         this.isShow = false;
@@ -315,24 +215,23 @@ export default {
         this.$message.success("下单成功");
       }
     },
-    // 获取地址信息
-    getAddress(data) {
-      // localStorage.setItem('ADDRESSLIST_KEY',JSON.stringify(data))
-      console.log(data)
-      this.addressList.push(data)
-    },
 
-    // 获取商品信息
-    getGoods(data) {
-      // localStorage.setItem('CARTLIST_KEY',JSON.stringify(data))
-      this.cartList.push(data)
-    },
-
-    // 新增地址
-    toAddAddress() {
-      // 清空
-      // this.$bus.$emit('clearAddress')
-      this.$router.push("/card/address");
+    // 新增 & 修改地址
+    toAddAddress(row,$index) {
+      // 修改
+      if(row){
+        this.$router.push({
+          path:'/card/address',
+          query:{
+            i:$index,
+            isEdit:row.id
+          }
+        })
+      }else{
+        // 添加
+        this.$router.push("/card/address");
+      }
+      // console.log(row)
     }
   }
 };
