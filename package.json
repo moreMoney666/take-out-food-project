@@ -20,10 +20,15 @@
     "js-cookie": "2.2.0",
     "less": "^3.12.2",
     "less-loader": "^7.1.0",
+<<<<<<< HEAD
     "nanoid": "^3.1.20",
+=======
+    "loader": "^2.1.1",
+>>>>>>> 7ddaf0cc3f782d65b4e68ed7744749d93430dd69
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
+    "uuid": "^8.3.2",
     "vue": "2.6.10",
     "vue-router": "3.0.6",
     "vuex": "3.1.0"

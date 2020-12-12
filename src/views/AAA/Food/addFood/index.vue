@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div>
     <!-- --------AddFood -->
     <el-card class="box-card">
@@ -35,11 +36,17 @@
       </div>
     </el-card>
   </div>
+=======
+<div>
+  ---------addFood
+</div>
+>>>>>>> 7ddaf0cc3f782d65b4e68ed7744749d93430dd69
 </template>
 
 <script>
 import { nanoid } from "nanoid";
 export default {
+<<<<<<< HEAD
   name: "AddFood",
   data() {
     return {
@@ -178,6 +185,11 @@ export default {
     },
   },
 };
+=======
+  name: 'AddFood',
+  
+}
+>>>>>>> 7ddaf0cc3f782d65b4e68ed7744749d93430dd69
 </script>
 
 <style lang='less' scoped>
