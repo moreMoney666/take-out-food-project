@@ -123,7 +123,8 @@ export default {
   methods: {
     // 点击立即创建按钮,jiang
     submitForm(formName) {
-      // const result = await this.$bus.$emit("addAddressList",this.ruleForm);
+    this.$bus.$emit("getAddressList",this.ruleForm);
+    this.$router.push('/card/cartList')
       // try{
       //     if(result){
 

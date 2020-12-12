@@ -318,6 +318,7 @@ export default {
     // 获取地址信息
     getAddress(data) {
       // localStorage.setItem('ADDRESSLIST_KEY',JSON.stringify(data))
+      console.log(data)
       this.addressList.push(data)
     },
 
