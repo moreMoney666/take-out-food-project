@@ -58,11 +58,12 @@ export default {
             message: "长度在 1 到 10 个字符",
             trigger: "blur",
             //  { pattern: /^1[34578]\d{9}$/, message: '目前只支持中国大陆的手机号码' }
+            // /^[\u4e00-\u9fa5]+$/.test(value) || [a-zA-Z]   /^[\u4e00-\u9fa5]+$/
           },
           {
             validator: function (rule, value, callback) {
-              if ((/^[\u4e00-\u9fa5]+$/.test(value)) === false) {
-                callback(new Error("请输入中文"));
+              if (/^([A-Za-z]|[\u4E00-\u9FA5])+$/.test(value) === false) {
+                callback(new Error("请输入正确名字"));
               } else {
                 //校验通过
                 callback();
@@ -80,7 +81,7 @@ export default {
           },
           {
             validator: function (rule, value, callback) {
-              if ((/^[\u4e00-\u9fa5]+$/.test(value)) === false) {
+              if (/^[\u4e00-\u9fa5]+$/.test(value) === false) {
                 callback(new Error("请输入中文"));
               } else {
                 //校验通过
@@ -99,7 +100,7 @@ export default {
           },
           {
             validator: function (rule, value, callback) {
-              if ((/^[\u4e00-\u9fa5]+$/.test(value)) === false) {
+              if (/^[\u4e00-\u9fa5]+$/.test(value) === false) {
                 callback(new Error("请输入中文"));
               } else {
                 //校验通过
@@ -119,7 +120,7 @@ export default {
         ],
       },
       foodList: [],
-    }
+    };
   },
   mounted() {
     // 从localStorage里面读取地址列表
