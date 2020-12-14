@@ -6,6 +6,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 import '@/styles/index.scss' // global css
+<<<<<<< HEAD
+=======
+// import '@/plugins/element-ui'
+
+>>>>>>> 89388a11d6aa50d96793760c5131b3ac80dd9dbd
 import App from './App'
 import store from './store'
 import router from './router'
@@ -14,8 +19,12 @@ import  * as API from '@/api'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+<<<<<<< HEAD
 // 引入准备全局注册的组件
 import CategorySelector from '@/components/CategorySelector'
+=======
+import '@/plugins/element-ui'
+>>>>>>> 89388a11d6aa50d96793760c5131b3ac80dd9dbd
 
 // 注册全局组件
 Vue.component('CategorySelector', CategorySelector)
@@ -34,14 +43,23 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // set ElementUI lang to EN
-Vue.use(ElementUI, { locale })
+// Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
+<<<<<<< HEAD
 // Vue.use(ElementUI)
 Vue.prototype.$API = API
+=======
+Vue.use(ElementUI)
+>>>>>>> 89388a11d6aa50d96793760c5131b3ac80dd9dbd
 
 Vue.config.productionTip = false
 
+
+// 安装全局事件总线
 new Vue({
+  beforeCreate() {
+    Vue.prototype.$bus = this
+  },
   el: '#app',
   router,
   store,

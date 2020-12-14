@@ -1,0 +1,26 @@
+* {
+	margin: 0;
+	padding: 0;
+  }
+  body {
+	height: 800px;
+  }
+  .one {
+	height: 956px;
+	background: url(images/01.png) no-repeat center 0;
+  }
+  .two {
+	height: 321px;
+	background: url(images/06.png) no-repeat center 0;
+	font-size: 50px;
+	text-align: center;
+	line-height: 321px;
+	font-variant: small-caps;
+	font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+  }
+  .three {
+	height: 600px;
+	background: url(images/03.jpg) no-repeat center top;
+	background-size: cover;
+	background-attachment: fixed;
+  }
