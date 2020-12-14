@@ -37,6 +37,7 @@ export const constantRoutes = [
     hidden: true
   },
 
+
   {
     path: '/404',
     component: () => import('@/views/404'),
@@ -63,16 +64,10 @@ export const constantRoutes = [
     meta: { title: '食品管理', icon: '' },
     children: [
       {
-        path: 'searchFood',
-        name: 'SearchFood',
-        component: () => import('@/views/AAA/Food/searchFood'),
-        meta: { title: '搜索食品', icon: '' }
-      },
-      {
-        path: 'addFood',
-        name: 'AddFood',
-        component: () => import('@/views/AAA/Food/addFood'),
-        meta: { title: '增加食品', icon: '' }
+        path: 'addRestrant',
+        name: 'addRestrant',
+        component: () => import('@/views/AAA/Food/addRestrant'),
+        meta: { title: '餐馆管理', icon: '' }
       },
       {
         path: 'foodList',
