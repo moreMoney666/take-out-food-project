@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue";
+import Router from "vue-router";
 
-Vue.use(Router)
+Vue.use(Router);
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from "@/layout";
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -32,53 +32,55 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
+    path: "/login",
+    component: () => import("@/views/login/index"),
     hidden: true
   },
 
   {
-    path: '/404',
-    component: () => import('@/views/404'),
+    path: "/404",
+    component: () => import("@/views/404"),
     hidden: true
   },
 
   {
-    path: '/',
+    path: "/",
     component: Layout,
-    redirect: '/home',
-    children: [{
-      path: 'home',
-      name: 'Home',
-      component: () => import('@/views/AAA/Home'),
-      meta: { title: '首页', icon: '' }
-    }]
-  },
-
-  {
-    path: '/food',
-    component: Layout,
-    redirect: '/food/searchFood',
-    name: 'Food',
-    meta: { title: '食品管理', icon: '' },
+    redirect: "/home",
     children: [
       {
-        path: 'searchFood',
-        name: 'SearchFood',
-        component: () => import('@/views/AAA/Food/searchFood'),
-        meta: { title: '搜索食品', icon: '' }
+        path: "home",
+        name: "Home",
+        component: () => import("@/views/AAA/Home"),
+        meta: { title: "首页", icon: "" }
+      }
+    ]
+  },
+
+  {
+    path: "/food",
+    component: Layout,
+    redirect: "/food/searchFood",
+    name: "Food",
+    meta: { title: "食品管理", icon: "" },
+    children: [
+      {
+        path: "addRestrant",
+        name: "addRestrant",
+        component: () => import("@/views/AAA/Food/addRestrant"),
+        meta: { title: "餐馆管理", icon: "" }
       },
       {
-        path: 'addFood',
-        name: 'AddFood',
-        component: () => import('@/views/AAA/Food/addFood'),
-        meta: { title: '增加食品', icon: '' }
+        path: "addFood",
+        name: "AddFood",
+        component: () => import("@/views/AAA/Food/addFood"),
+        meta: { title: "增加食品", icon: "" }
       },
       {
-        path: 'foodList',
-        name: 'FoodList',
-        component: () => import('@/views/AAA/Food/foodList'),
-        meta: { title: '食品列表', icon: '' }
+        path: "foodList",
+        name: "FoodList",
+        component: () => import("@/views/AAA/Food/foodList"),
+        meta: { title: "食品列表", icon: "" }
       }
     ]
   },
@@ -97,33 +99,32 @@ export const constantRoutes = [
   // },
 
   {
-    path: '/card',
+    path: "/card",
     component: Layout,
-    redirect: '/card/cartList',
-    name: 'Cart',
+    redirect: "/card/cartList",
+    name: "Cart",
     meta: {
-      title: '购物车',
-      icon: ''
+      title: "购物车",
+      icon: ""
     },
     children: [
       {
-        path: 'cartList',
-        component: () => import('@/views/AAA/Card/cardList'), // Parent router-view
-        name: 'CardList',
-        meta: { title: '购物车列表' },
- 
+        path: "cartList",
+        component: () => import("@/views/AAA/Card/cardList"), // Parent router-view
+        name: "CardList",
+        meta: { title: "购物车列表" }
       },
       {
-        path: 'addGood',
-        component: () => import('@/views/AAA/Card/addGood'),
-        name: 'AddGood',
-        meta: { title: '添加商品' }
+        path: "addGood",
+        component: () => import("@/views/AAA/Card/addGood"),
+        name: "AddGood",
+        meta: { title: "添加商品" }
       },
       {
-        path: 'address',
-        component: () => import('@/views/AAA/Card/address'),
-        name: 'Address',
-        meta: { title: '地址信息' }
+        path: "address",
+        component: () => import("@/views/AAA/Card/address"),
+        name: "Address",
+        meta: { title: "地址信息" }
       }
     ]
   },
@@ -140,21 +141,22 @@ export const constantRoutes = [
   // },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
+  { path: "*", redirect: "/404", hidden: true }
+];
 
-const createRouter = () => new Router({
-  mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    mode: "history", // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  });
 
-const router = createRouter()
+const router = createRouter();
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouter();
+  router.matcher = newRouter.matcher; // reset router
 }
 
-export default router
+export default router;
