@@ -114,6 +114,7 @@
 </template>
 
 <script>
+import cloneDeep from "lodash/cloneDeep";
 export default {
   data() {
     // 自定义验证规则
@@ -207,7 +208,7 @@ export default {
     // 修改逻辑
     showUpdateDialog(row, $index) {
       this.isShowDialog = true; // 点击修改,显示修改的dialog
-      this.newrestantListForm = { ...row }; //浅拷贝;
+      this.newrestantListForm = cloneDeep(row); //浅拷贝;
       this.newrestantList.splice($index, 1, this.newrestantListForm);
     },
     // 删除逻辑

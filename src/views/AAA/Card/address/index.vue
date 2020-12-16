@@ -38,8 +38,8 @@
       </el-form-item>
       <el-form-item label="性别">
         <el-radio-group v-model="ruleForm.gender">
-          <el-radio label="男"></el-radio>
-          <el-radio label="女"></el-radio>
+          <el-radio label="1">女</el-radio>
+          <el-radio label="2">男</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="备注">
@@ -47,7 +47,9 @@
       </el-form-item>
       <el-form-item>
         <div v-if="$route.query.isEdit">
-          <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')"
+            >保存</el-button
+          >
           <el-button @click="$router.replace('/card/cartList')">取消</el-button>
         </div>
         <div v-else>
@@ -55,6 +57,9 @@
             >立即创建</el-button
           >
           <el-button @click="resetForm()">重置</el-button>
+          <el-button @click="$router.replace('/card/cartlist')" type="primary"
+            >取消</el-button
+          >
         </div>
       </el-form-item>
     </el-form>
@@ -65,12 +70,11 @@ import { v4 as uuidv4 } from "uuid";
 export default {
   name: "Address",
   mounted() {
-    if(this.$route.query.isEdit){
+    if (this.$route.query.isEdit) {
       const attr = JSON.parse(localStorage.getItem("addressList"));
       const index = this.$route.query.i * 1;
       this.ruleForm = attr[index];
     }
-
   },
   data() {
     return {
@@ -83,9 +87,9 @@ export default {
         city: "", //所在城市
         detail: "", //详细地址
         type: [], //地址类型
-        gender: "", //性别
+        gender: "1", //性别
         desc: "", //备注
-        index: 0
+        index: 0,
       },
       // 表单验证
       rules: {
@@ -94,35 +98,35 @@ export default {
           { required: true, message: "请输入收货姓名", trigger: "blur" },
           { min: 2, max: 5, message: "长度在 2 到 5 个字符", trigger: "blur" },
           {
-            validator: function(rule, value, callback) {
+            validator: function (rule, value, callback) {
               if (/^[\u4e00-\u9fa5]+$/.test(value) == false) {
                 callback(new Error("请输入中文"));
               } else {
                 //校验通过
                 callback();
               }
-            }
-          }
+            },
+          },
         ],
         phone: [
           { required: true, message: "请填写手机号码", trigger: "change" },
           { min: 11, max: 11, message: "手机号长度不正确", trigger: "blur" },
-          { pattern: /^1[34578]\d{9}$/, message: "手机号格式不正确" }
+          { pattern: /^1[34578]\d{9}$/, message: "手机号格式不正确" },
         ],
         city: [{ required: true, message: "请选择城市", trigger: "blur" }],
         detail: [
-          { required: true, message: "请输入详细地址", trigger: "blur" }
+          { required: true, message: "请输入详细地址", trigger: "blur" },
         ],
         type: [
           {
             type: "array",
             required: true,
             message: "请至少选择一个地址类型",
-            trigger: "change"
-          }
+            trigger: "change",
+          },
         ],
-        gender: [{ type: "array", required: true, trigger: "change" }]
-      }
+        gender: [{ type: "array", required: true, trigger: "change" }],
+      },
     };
   },
   methods: {
@@ -136,35 +140,34 @@ export default {
         type: [], //地址类型
         gender: "", //性别
         desc: "", //备注
-        index: 0
+        index: 0,
       };
     },
     // 点击立即创建按钮,jiang
     submitForm(forName) {
       console.log(forName);
-      this.$refs[forName].validate(valid => {
+      this.$refs[forName].validate((valid) => {
         if (valid) {
-            let addressList = [];
-            if (localStorage.getItem("addressList")) {
-              addressList = JSON.parse(localStorage.getItem("addressList"));
-              this.addressList = addressList
-            }
-            // 修改
-            if(this.$route.query.isEdit){
-              let index = this.$route.query.i
-              addressList.splice(index,1,this.ruleForm)
-
-            }else{
-              // 新增
-              this.ruleForm.id = uuidv4();
-              // console.log(this.addressList);
-              addressList.push(this.ruleForm);
-              this.addressList = addressList;
-              // console.log(this.addressList); 
-            }
-            localStorage.setItem("addressList", JSON.stringify(this.addressList));
-            this.$message.success("操作成功");
-            this.$router.push("/card/cartList");  
+          let addressList = [];
+          if (localStorage.getItem("addressList")) {
+            addressList = JSON.parse(localStorage.getItem("addressList"));
+            this.addressList = addressList;
+          }
+          // 修改
+          if (this.$route.query.isEdit) {
+            let index = this.$route.query.i;
+            addressList.splice(index, 1, this.ruleForm);
+          } else {
+            // 新增
+            this.ruleForm.id = uuidv4();
+            // console.log(this.addressList);
+            addressList.push(this.ruleForm);
+            this.addressList = addressList;
+            // console.log(this.addressList);
+          }
+          localStorage.setItem("addressList", JSON.stringify(this.addressList));
+          this.$message.success("操作成功");
+          this.$router.push("/card/cartList");
         } else {
           console.log("error submit!!");
           return false;
@@ -180,10 +183,10 @@ export default {
         detail: "", //详细地址
         type: [], //地址类型
         gender: "", //性别
-        desc: "" //备注
+        desc: "", //备注
       };
-    }
-  }
+    },
+  },
   // 重置按钮
 };
 </script>

@@ -1,12 +1,12 @@
 <template>
 <div>
-  ------SearchFood
+  ------FoodList
 </div>
 </template>
 
 <script>
 export default {
-    name: 'SearchFood',
+    name: 'FoodList',
     
 }
 </script>

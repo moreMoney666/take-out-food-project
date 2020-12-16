@@ -27,7 +27,10 @@ module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
+<<<<<<< HEAD
+=======
   lintOnSave: process.env.NODE_ENV === 'development',
+>>>>>>> 89388a11d6aa50d96793760c5131b3ac80dd9dbd
   lintOnSave:false,
   productionSourceMap: false,
   // devServer: {
@@ -47,6 +50,21 @@ module.exports = {
       errors: true
     },
     before: require('./mock/mock-server.js'),
+<<<<<<< HEAD
+
+    proxy: {
+      '/dev-api': { // 匹配所有以 '/dev-api'开头的请求路径
+        target: 'https://elm.cangdu.org/',
+        // target: 'http://47.93.148.192',
+        changeOrigin: true, // 支持跨域
+        pathRewrite: { // 重写路径: 去掉路径中开头的'/dev-api'
+          '^/dev-api': ''
+        }
+      },
+    }
+
+
+=======
     proxy:{
       '/dev-api':{
         //匹配所有以'/dev-api'开头的请求路径
@@ -57,6 +75,7 @@ module.exports = {
         }
       }
     }
+>>>>>>> 89388a11d6aa50d96793760c5131b3ac80dd9dbd
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
